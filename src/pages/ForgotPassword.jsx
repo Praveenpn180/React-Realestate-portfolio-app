@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import Auth from '../components/Auth'
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
