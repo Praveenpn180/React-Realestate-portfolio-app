@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Offers from "./pages/Offers";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
+import CreateListing from "./pages/CreateListing";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -33,6 +34,9 @@ const App = () => {
         <Routes>
           <Route path="/profile" element={<PrivateRoute />}>
             <Route path="/profile" element={<Profile />} />
+          </Route>
+          <Route path="/create-listing" element={<PrivateRoute />}>
+            <Route path="/create-listing" element={<CreateListing />} />
           </Route>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={loggedIn? <Home/>: <Login />} />
