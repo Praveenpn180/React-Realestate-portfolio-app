@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect,useState}from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar";
@@ -8,7 +8,24 @@ import Login from "./pages/Login";
 import Offers from "./pages/Offers";
 import Profile from "./pages/Profile";
 import Signup from "./pages/Signup";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const App = () => {
+  const [loggedIn, setLoggedIn] = useState();
+
+ useEffect(()=>{
+  const auth = getAuth();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setLoggedIn(true);
+    }else{
+      setLoggedIn(false);
+    }
+  })
+ },[])
+
+
   return (
     <>
       <Router>
@@ -18,12 +35,24 @@ const App = () => {
             <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/login" element={loggedIn? <Home/>: <Login />} />
+          <Route path="/signup" element={loggedIn? <Home/>:<Signup />} />
+          <Route path="/forgot-password" element={loggedIn? <Home/>:<ForgotPassword />} />
           <Route path="/offers" element={<Offers />} />
         </Routes>
       </Router>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
     </>
   );
 };
