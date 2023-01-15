@@ -12,14 +12,13 @@ import {
 import { db } from "../firebase";
 import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
-import { async } from "@firebase/util";
 
 const Offers = () => {
   const [listings, setListings] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [lastFetchedListing, setLastFetchListing] = useState(null);
   useEffect(() => {
-    async function fetchListings() {
+   const fetchListings = async()=> {
       try {
         const listingRef = collection(db, "listings");
         const q = query(
@@ -41,6 +40,7 @@ const Offers = () => {
         setListings(listings);
         setLoading(false);
       } catch (error) {
+        console.log(error);
         toast.error("Could not fetch listing");
       }
     }
@@ -71,6 +71,8 @@ const Offers = () => {
       setListings((prevState)=>[...prevState, ...listings]);
       setLoading(false);
     } catch (error) {
+      console.log(error);
+
       toast.error("Could not fetch listing");
     }
   }

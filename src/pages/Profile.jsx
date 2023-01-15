@@ -75,6 +75,7 @@ const Profile = () => {
       });
       setListings(listings);
       setLoading(false);
+      console.log(loading);
     }
     fetchUserListings();
   }, [auth.currentUser.uid]);
